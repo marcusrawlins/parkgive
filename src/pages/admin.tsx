@@ -1,5 +1,5 @@
 /** @jsxImportSource hono/jsx */
-import { Layout } from './layout';
+import { Layout, ParkGiveLogo } from './layout';
 import type { Session } from '../lib/types';
 import { formatCents } from '../lib/pricing';
 
@@ -29,8 +29,8 @@ export function AdminLoginPage({ error }: { error?: string }) {
       <div class="min-h-screen bg-gray-50 flex items-center justify-center p-6">
         <div class="w-full max-w-sm">
           <div class="text-center mb-8">
-            <span class="text-4xl">🅿️</span>
-            <h1 class="text-2xl font-bold text-gray-900 mt-3">ParkGive Admin</h1>
+            <ParkGiveLogo size="lg" />
+            <h1 class="text-xl font-bold text-gray-900 mt-4">Admin Dashboard</h1>
             <p class="text-gray-500 text-sm mt-1">Sign in to view the dashboard</p>
           </div>
           <form method="post" action="/admin/login" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
@@ -41,12 +41,12 @@ export function AdminLoginPage({ error }: { error?: string }) {
               required
               autofocus
               placeholder="Enter admin password"
-              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 mb-4"
+              class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand mb-4"
             />
             {error && (
               <p class="text-red-600 text-sm mb-4 bg-red-50 border border-red-100 rounded-lg px-3 py-2">{error}</p>
             )}
-            <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-700 transition-colors">
+            <button type="submit" class="w-full bg-brand text-white font-bold py-3 rounded-xl hover:bg-brand-dark transition-colors">
               Sign In
             </button>
           </form>
@@ -75,8 +75,7 @@ export function AdminDashboard({
         {/* Header */}
         <header class="bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
           <div class="flex items-center gap-2">
-            <span class="text-xl">🅿️</span>
-            <span class="text-lg font-bold text-emerald-600">ParkGive</span>
+            <ParkGiveLogo size="md" />
             <span class="text-gray-400 text-sm">· Admin</span>
           </div>
           <form method="post" action="/admin/logout">
@@ -89,7 +88,7 @@ export function AdminDashboard({
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             <div class="bg-white rounded-2xl p-5 border border-gray-100">
               <p class="text-gray-500 text-sm">Total Raised</p>
-              <p class="text-3xl font-bold text-emerald-600 mt-1">{formatCents(totalRaisedCents)}</p>
+              <p class="text-3xl font-bold text-brand mt-1">{formatCents(totalRaisedCents)}</p>
               {totalDonationCents > 0 && (
                 <p class="text-xs text-gray-400 mt-1">incl. {formatCents(totalDonationCents)} in donations</p>
               )}
@@ -109,7 +108,7 @@ export function AdminDashboard({
             <h2 class="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
               Active Sessions
               {activeSessions.length > 0 && (
-                <span class="text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+                <span class="text-xs font-medium text-brand-dark bg-brand-light px-2 py-0.5 rounded-full">
                   {activeSessions.length}
                 </span>
               )}
@@ -122,7 +121,7 @@ export function AdminDashboard({
               <div class="space-y-3">
                 {activeSessions.map((s) => {
                   const mins = minutesLeft(s.end_time);
-                  const color = mins === null ? 'text-gray-400' : mins > 30 ? 'text-emerald-600' : mins > 10 ? 'text-yellow-500' : 'text-red-500';
+                  const color = mins === null ? 'text-gray-400' : mins > 30 ? 'text-brand' : mins > 10 ? 'text-yellow-500' : 'text-red-500';
                   return (
                     <div class="bg-white rounded-2xl border border-gray-100 p-4 flex items-center justify-between gap-4">
                       <div>
@@ -168,7 +167,7 @@ export function AdminDashboard({
                           <td class="px-4 py-3 text-gray-600">{formatCents(s.parking_amount_cents + s.donation_amount_cents)}</td>
                           <td class="px-4 py-3">
                             <span class={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
-                              s.status === 'active'  ? 'bg-emerald-100 text-emerald-700' :
+                              s.status === 'active'  ? 'bg-brand-light text-brand-dark' :
                               s.status === 'expired' ? 'bg-gray-100 text-gray-500' :
                                                        'bg-yellow-100 text-yellow-700'
                             }`}>

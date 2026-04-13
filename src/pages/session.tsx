@@ -1,5 +1,5 @@
 /** @jsxImportSource hono/jsx */
-import { Layout } from './layout';
+import { Layout, ParkGiveLogo } from './layout';
 import type { Session } from '../lib/types';
 import { formatCents } from '../lib/pricing';
 
@@ -23,7 +23,7 @@ const TIMER_SCRIPT = `
       String(m).padStart(2,'0') + ':' +
       String(s).padStart(2,'0');
     el.className = diff > 1800
-      ? 'text-emerald-600 text-5xl font-mono font-bold tabular-nums'
+      ? 'text-brand text-5xl font-mono font-bold tabular-nums'
       : diff > 600
         ? 'text-yellow-500 text-5xl font-mono font-bold tabular-nums'
         : 'text-red-500   text-5xl font-mono font-bold tabular-nums';
@@ -79,8 +79,8 @@ export function SessionPage({ session, payment }: Props) {
       <div class="min-h-screen bg-white flex flex-col">
         {/* Header */}
         <header class="px-6 py-4 flex items-center gap-2 border-b border-gray-100">
-          <a href="/" class="flex items-center gap-2 text-emerald-600 font-bold text-lg">
-            <span class="text-xl">🅿️</span> ParkGive
+          <a href="/" class="flex items-center gap-2">
+            <ParkGiveLogo size="md" />
           </a>
         </header>
 
@@ -92,7 +92,7 @@ export function SessionPage({ session, payment }: Props) {
               <h1 class="text-2xl font-bold text-gray-900 mb-2">Confirming your payment…</h1>
               <p class="text-gray-500 text-sm mb-8">This usually takes just a moment.</p>
               <div class="flex justify-center">
-                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-brand" />
               </div>
               <p class="text-gray-400 text-xs mt-8">Please don't close this page</p>
             </div>
@@ -111,7 +111,7 @@ export function SessionPage({ session, payment }: Props) {
                 <div
                   id="countdown"
                   data-endtime={session.end_time!}
-                  class="text-5xl font-mono font-bold text-emerald-600 tabular-nums"
+                  class="text-5xl font-mono font-bold text-brand tabular-nums"
                 >
                   --:--:--
                 </div>
@@ -145,7 +145,7 @@ export function SessionPage({ session, payment }: Props) {
                 {session.donation_amount_cents > 0 && (
                   <div class="flex justify-between py-3">
                     <span class="text-gray-500">Your Donation</span>
-                    <span class="text-emerald-600 font-medium">{formatCents(session.donation_amount_cents)} ❤️</span>
+                    <span class="font-medium" style="color:#78B340">{formatCents(session.donation_amount_cents)} <span style="color:#F5922F">♥</span></span>
                   </div>
                 )}
               </div>
@@ -166,7 +166,7 @@ export function SessionPage({ session, payment }: Props) {
                 {session.created_at && <p class="text-gray-400 text-xs mt-1">{fmtDateTime(session.created_at)}</p>}
               </div>
               <div>
-                <a href="/park" class="inline-block bg-emerald-600 text-white font-bold py-3 px-8 rounded-2xl hover:bg-emerald-700 transition-colors">
+                <a href="/park" class="inline-block bg-brand text-white font-bold py-3 px-8 rounded-2xl hover:bg-brand-dark transition-colors">
                   Park Again
                 </a>
               </div>
@@ -177,7 +177,7 @@ export function SessionPage({ session, payment }: Props) {
               <div class="text-5xl mb-4">⚠️</div>
               <h1 class="text-2xl font-bold text-gray-900 mb-2">Payment Not Confirmed</h1>
               <p class="text-gray-500 mb-6">Please complete payment to activate your parking session.</p>
-              <a href="/park" class="inline-block bg-emerald-600 text-white font-bold py-3 px-8 rounded-2xl hover:bg-emerald-700 transition-colors">
+              <a href="/park" class="inline-block bg-brand text-white font-bold py-3 px-8 rounded-2xl hover:bg-brand-dark transition-colors">
                 Start Over
               </a>
             </div>

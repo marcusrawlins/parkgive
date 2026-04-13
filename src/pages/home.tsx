@@ -1,5 +1,5 @@
 /** @jsxImportSource hono/jsx */
-import { Layout } from './layout';
+import { Layout, ParkGiveLogo } from './layout';
 
 interface Props {
   totalCents: number;
@@ -11,34 +11,31 @@ export function HomePage({ totalCents }: Props) {
       <div class="min-h-screen bg-white flex flex-col">
         {/* Header */}
         <header class="px-6 py-4 flex items-center justify-between border-b border-gray-100">
-          <div class="flex items-center gap-2">
-            <span class="text-2xl">🅿️</span>
-            <span class="text-xl font-bold text-emerald-600">ParkGive</span>
-          </div>
+          <ParkGiveLogo />
           <a href="/admin" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">Admin</a>
         </header>
 
         {/* Hero */}
-        <section class="bg-emerald-600 text-white px-6 py-16 text-center">
+        <section class="bg-brand text-white px-6 py-16 text-center">
           <div class="max-w-sm mx-auto">
-            <p class="text-emerald-200 text-sm font-medium uppercase tracking-widest mb-4">
+            <p class="text-brand-soft text-sm font-medium uppercase tracking-widest mb-4">
               Parking · Purpose · Community
             </p>
             <h1 class="text-5xl font-bold mb-3 leading-tight">Park with<br />Purpose.</h1>
-            <p class="text-emerald-100 mb-2 text-lg">Pay to park. Support the youth.</p>
-            <p class="text-emerald-200 text-sm mb-10">
+            <p class="text-brand-soft mb-2 text-lg">Pay to park. Support the youth.</p>
+            <p class="text-brand-muted text-sm mb-10">
               Every parking fee goes directly to support youth programs at the church next door.
             </p>
             {totalCents > 0 && (
               <div class="inline-block bg-white/10 rounded-2xl px-6 py-4 mb-8">
-                <p class="text-emerald-200 text-xs uppercase tracking-widest mb-1">Total raised for youth programs</p>
+                <p class="text-brand-muted text-xs uppercase tracking-widest mb-1">Total raised for youth programs</p>
                 <p class="text-3xl font-bold">${(totalCents / 100).toFixed(2)}</p>
               </div>
             )}
-            <a href="/park" class="block w-full max-w-xs mx-auto bg-white text-emerald-700 font-bold text-lg py-4 px-8 rounded-2xl shadow-lg hover:bg-emerald-50 transition-all">
+            <a href="/park" class="block w-full max-w-xs mx-auto bg-white font-bold text-lg py-4 px-8 rounded-2xl shadow-lg hover:bg-brand-light transition-all" style="color:#4B8EC1">
               Pay to Park →
             </a>
-            <p class="text-emerald-300 text-xs mt-4">No account needed · Takes 60 seconds</p>
+            <p class="text-brand-muted text-xs mt-4">No account needed · Takes 60 seconds</p>
           </div>
         </section>
 
@@ -73,7 +70,7 @@ export function HomePage({ totalCents }: Props) {
               { step: '3', text: 'Get a confirmation page with a live countdown timer.' },
             ].map(({ step, text }) => (
               <div class="flex items-start gap-3">
-                <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 font-bold text-sm flex items-center justify-center flex-shrink-0 mt-0.5">{step}</div>
+                <div class="w-7 h-7 rounded-full bg-brand-light font-bold text-sm flex items-center justify-center flex-shrink-0 mt-0.5" style="color:#4B8EC1">{step}</div>
                 <p class="text-gray-600 text-sm leading-relaxed">{text}</p>
               </div>
             ))}

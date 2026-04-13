@@ -1,5 +1,5 @@
 /** @jsxImportSource hono/jsx */
-import { Layout } from './layout';
+import { Layout, ParkGiveLogo } from './layout';
 
 const PARK_SCRIPT = `
 (function () {
@@ -30,25 +30,25 @@ const PARK_SCRIPT = `
     document.querySelectorAll('[data-dur]').forEach(function(btn, i) {
       var sel = i === state.durIdx;
       btn.className = sel
-        ? 'p-3 rounded-xl border text-left border-emerald-500 bg-emerald-50 ring-1 ring-emerald-500 w-full'
-        : 'p-3 rounded-xl border text-left border-gray-200 bg-white hover:border-emerald-300 w-full';
-      btn.querySelector('.dur-label').className = sel ? 'text-sm font-medium text-emerald-700' : 'text-sm font-medium text-gray-600';
-      btn.querySelector('.dur-price').className = sel ? 'text-xl font-bold text-emerald-600 mt-0.5' : 'text-xl font-bold text-gray-900 mt-0.5';
+        ? 'p-3 rounded-xl border text-left border-brand bg-brand-light ring-1 ring-brand w-full'
+        : 'p-3 rounded-xl border text-left border-gray-200 bg-white hover:border-brand-muted w-full';
+      btn.querySelector('.dur-label').className = sel ? 'text-sm font-medium text-brand-dark' : 'text-sm font-medium text-gray-600';
+      btn.querySelector('.dur-price').className = sel ? 'text-xl font-bold text-brand mt-0.5' : 'text-xl font-bold text-gray-900 mt-0.5';
     });
 
     // Donation preset buttons
     document.querySelectorAll('[data-preset]').forEach(function(btn, i) {
       var sel = !state.isCustom && i === state.presetIdx;
       btn.className = sel
-        ? 'py-2 rounded-xl text-sm font-medium border bg-emerald-600 text-white border-emerald-600'
-        : 'py-2 rounded-xl text-sm font-medium border bg-white text-gray-700 border-gray-200 hover:border-emerald-300';
+        ? 'py-2 rounded-xl text-sm font-medium border bg-brand text-white border-brand'
+        : 'py-2 rounded-xl text-sm font-medium border bg-white text-gray-700 border-gray-200 hover:border-brand-muted';
     });
 
     // Custom input highlight
     var ci = document.getElementById('custom-don');
     ci.className = state.isCustom
-      ? 'w-full pl-7 pr-4 py-2 rounded-xl border border-emerald-500 ring-1 ring-emerald-500 text-sm focus:outline-none'
-      : 'w-full pl-7 pr-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500';
+      ? 'w-full pl-7 pr-4 py-2 rounded-xl border border-brand ring-1 ring-brand text-sm focus:outline-none'
+      : 'w-full pl-7 pr-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand';
 
     // Price summary
     document.getElementById('sum-parking').textContent = fmt(dur.cents);
@@ -133,15 +133,12 @@ export function ParkPage() {
         {/* Header */}
         <header class="bg-white px-6 py-4 flex items-center gap-3 border-b border-gray-100 sticky top-0 z-10">
           <a href="/" class="text-gray-400 hover:text-gray-600 text-lg leading-none">←</a>
-          <div class="flex items-center gap-2">
-            <span class="text-xl">🅿️</span>
-            <span class="text-lg font-bold text-emerald-600">ParkGive</span>
-          </div>
+          <ParkGiveLogo size="md" />
         </header>
 
         <div class="flex-1 px-6 py-8 max-w-md mx-auto w-full">
           <h1 class="text-2xl font-bold text-gray-900 mb-1">Pay to Park</h1>
-          <p class="text-gray-500 text-sm mb-8">Proceeds support the local youth program. ❤️</p>
+          <p class="text-gray-500 text-sm mb-8">Proceeds support the local youth program. <span style="color:#F5922F">♥</span></p>
 
           <form id="park-form" class="space-y-6">
             {/* License plate */}
@@ -155,7 +152,7 @@ export function ParkPage() {
                 maxLength={10}
                 placeholder="ABC 1234"
                 autocomplete="off"
-                class="w-full px-4 py-3 rounded-xl border border-gray-200 text-xl font-mono uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 text-xl font-mono uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
               />
             </div>
 
@@ -197,7 +194,7 @@ export function ParkPage() {
                   min="0"
                   step="0.01"
                   placeholder="Custom amount"
-                  class="w-full pl-7 pr-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  class="w-full pl-7 pr-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand"
                 />
               </div>
             </div>
@@ -209,7 +206,7 @@ export function ParkPage() {
                 <span id="sum-parking">$2.00</span>
               </div>
               <div id="sum-don-row" style="display:none" class="flex justify-between text-gray-600">
-                <span>Donation ❤️</span>
+                <span>Donation <span style="color:#F5922F">♥</span></span>
                 <span id="sum-don">$0.00</span>
               </div>
               <div class="flex justify-between text-gray-400 text-xs">
@@ -227,7 +224,7 @@ export function ParkPage() {
             <button
               id="submit-btn"
               type="submit"
-              class="w-full bg-emerald-600 text-white font-bold text-lg py-4 rounded-2xl hover:bg-emerald-700 transition-colors shadow-sm"
+              class="w-full bg-brand text-white font-bold text-lg py-4 rounded-2xl hover:bg-brand-dark transition-colors shadow-sm"
             >
               Pay $2.36
             </button>
