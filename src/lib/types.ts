@@ -1,0 +1,21 @@
+export type SessionStatus = 'pending' | 'active' | 'expired';
+
+export interface Session {
+  id: string;
+  license_plate: string;
+  start_time: string | null;
+  end_time: string | null;
+  duration_hours: 1 | 2 | 4 | 24;
+  parking_amount_cents: number;
+  donation_amount_cents: number;
+  stripe_payment_intent_id: string | null;
+  stripe_checkout_session_id: string | null;
+  status: SessionStatus;
+  created_at: string;
+}
+
+export type DurationOption = {
+  label: string;
+  hours: 1 | 2 | 4 | 24;
+  priceCents: number;
+};
