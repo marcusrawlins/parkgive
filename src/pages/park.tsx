@@ -17,32 +17,40 @@ const PARK_SCRIPT = `
   function fmt(c)   { return '$' + (c / 100).toFixed(2); }
   function donationCents() { return state.isCustom ? state.customCents : PRESETS[state.presetIdx]; }
 
+  var BRAND      = '#4B8EC1';
+  var BRAND_DARK = '#3A7BAF';
+  var BRAND_LITE = '#EBF5FF';
+
   function render() {
     var dur = DURATIONS[state.durIdx];
     var don = donationCents();
     var f   = fee(dur.cents + don);
     var tot = dur.cents + don + f;
 
+    // Duration buttons — inline styles so Tailwind CDN isn't needed for dynamic states
     document.querySelectorAll('[data-dur]').forEach(function(btn, i) {
       var sel = i === state.durIdx;
-      btn.className = sel
-        ? 'p-3 rounded-xl border text-left border-brand bg-brand-light ring-1 ring-brand w-full'
-        : 'p-3 rounded-xl border text-left border-gray-200 bg-white hover:border-brand-muted w-full';
-      btn.querySelector('.dur-label').className = sel ? 'text-sm font-medium text-brand-dark' : 'text-sm font-medium text-gray-600';
-      btn.querySelector('.dur-price').className = sel ? 'text-xl font-bold text-brand mt-0.5' : 'text-xl font-bold text-gray-900 mt-0.5';
+      btn.style.cssText = sel
+        ? 'border:2px solid '+BRAND+';background:'+BRAND_LITE+';box-shadow:0 0 0 1px '+BRAND+';border-radius:0.75rem;padding:0.75rem;text-align:left;width:100%;cursor:pointer;'
+        : 'border:1px solid #e5e7eb;background:white;border-radius:0.75rem;padding:0.75rem;text-align:left;width:100%;cursor:pointer;';
+      var lbl = btn.querySelector('.dur-label');
+      var prc = btn.querySelector('.dur-price');
+      if (lbl) { lbl.style.color = sel ? BRAND_DARK : '#4b5563'; }
+      if (prc) { prc.style.color = sel ? BRAND      : '#111827'; }
     });
 
+    // Donation preset buttons
     document.querySelectorAll('[data-preset]').forEach(function(btn, i) {
       var sel = !state.isCustom && i === state.presetIdx;
-      btn.className = sel
-        ? 'py-2 rounded-xl text-sm font-medium border bg-brand text-white border-brand'
-        : 'py-2 rounded-xl text-sm font-medium border bg-white text-gray-700 border-gray-200 hover:border-brand-muted';
+      btn.style.cssText = sel
+        ? 'background:'+BRAND+';color:white;border:1px solid '+BRAND+';border-radius:0.75rem;padding:0.5rem;font-size:0.875rem;font-weight:500;cursor:pointer;'
+        : 'background:white;color:#374151;border:1px solid #e5e7eb;border-radius:0.75rem;padding:0.5rem;font-size:0.875rem;font-weight:500;cursor:pointer;';
     });
 
+    // Custom donation input ring
     var ci = document.getElementById('custom-don');
-    ci.className = state.isCustom
-      ? 'w-full pl-7 pr-4 py-2 rounded-xl border border-brand ring-1 ring-brand text-sm focus:outline-none'
-      : 'w-full pl-7 pr-4 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand';
+    ci.style.outline = state.isCustom ? '2px solid '+BRAND : 'none';
+    ci.style.borderColor = state.isCustom ? BRAND : '#e5e7eb';
 
     document.getElementById('sum-parking').textContent = fmt(dur.cents);
     document.getElementById('sum-dur-label').textContent = dur.label;
@@ -151,7 +159,7 @@ export function ParkPage({ zone }: Props) {
         <div class="flex-1 px-6 py-8 max-w-md mx-auto w-full">
           <h1 class="text-xl font-bold text-gray-900 mb-1">Pay to Park</h1>
           <p class="text-gray-500 text-sm mb-6">
-            Proceeds support <span class="font-medium text-gray-700">{zone.org_name}</span>'s youth program.
+            Proceeds support the local youth program.
           </p>
 
           <form id="park-form" data-zone-id={zone.id} class="space-y-6">
@@ -245,7 +253,7 @@ export function ParkPage({ zone }: Props) {
             </button>
 
             <p class="text-center text-xs text-gray-400">
-              🔒 Secured by Stripe · Proceeds support {zone.org_name}
+              🔒 Secured by Stripe · Proceeds support the local youth program
             </p>
           </form>
         </div>

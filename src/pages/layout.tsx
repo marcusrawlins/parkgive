@@ -36,8 +36,8 @@ export function Layout({ title, children }: LayoutProps) {
         <link rel="icon" type="image/png" href="/logo-icon.png" />
         <meta name="theme-color" content="#4B8EC1" />
         <meta name="description" content="Pay to park. Proceeds support local youth programs." />
-        <script src="https://cdn.tailwindcss.com" />
         <script dangerouslySetInnerHTML={{ __html: TAILWIND_CONFIG }} />
+        <script src="https://cdn.tailwindcss.com" />
       </head>
       <body class="min-h-screen bg-white antialiased">
         {children}
