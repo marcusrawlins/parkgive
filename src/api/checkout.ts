@@ -10,9 +10,10 @@ export async function checkoutHandler(c: Context<{ Bindings: Env }>) {
       licensePlate: string;
       durationHours: number;
       donationCents: number;
+      zoneId?: string;
     }>();
 
-    const { licensePlate, durationHours, donationCents } = body;
+    const { licensePlate, durationHours, donationCents, zoneId } = body;
 
     if (!licensePlate?.trim()) {
       return c.json({ error: 'License plate is required.' }, 400);
@@ -30,6 +31,7 @@ export async function checkoutHandler(c: Context<{ Bindings: Env }>) {
     const sessionId = crypto.randomUUID();
     await createPendingSession(c.env, {
       id:            sessionId,
+      zoneId:        zoneId ?? null,
       licensePlate:  licensePlate.trim().toUpperCase(),
       durationHours: Number(durationHours),
       parkingCents,

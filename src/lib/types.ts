@@ -1,7 +1,18 @@
 export type SessionStatus = 'pending' | 'active' | 'expired';
 
+export interface Zone {
+  id: string;           // e.g. "PG-001"
+  name: string;         // e.g. "Pinetop Church Lot"
+  address: string;
+  org_name: string;
+  description: string | null;
+  active: number;
+  created_at: string;
+}
+
 export interface Session {
   id: string;
+  zone_id: string | null;
   license_plate: string;
   start_time: string | null;
   end_time: string | null;

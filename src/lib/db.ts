@@ -1,4 +1,19 @@
-import type { Env, Session } from './types';
+import type { Env, Session, Zone } from './types';
+
+/* ─── Zone queries ─── */
+
+export async function getActiveZones(env: Env): Promise<Zone[]> {
+  const { results } = await env.DB.prepare(
+    'SELECT * FROM zones WHERE active = 1 ORDER BY created_at ASC'
+  ).all<Zone>();
+  return results;
+}
+
+export async function getZone(env: Env, id: string): Promise<Zone | null> {
+  return env.DB.prepare('SELECT * FROM zones WHERE id = ? AND active = 1')
+    .bind(id)
+    .first<Zone>();
+}
 
 export async function getSession(env: Env, id: string): Promise<Session | null> {
   return env.DB.prepare('SELECT * FROM sessions WHERE id = ?')
@@ -26,15 +41,16 @@ export async function getSessionWithExpiry(env: Env, id: string): Promise<Sessio
 
 export async function createPendingSession(env: Env, data: {
   id: string;
+  zoneId: string | null;
   licensePlate: string;
   durationHours: number;
   parkingCents: number;
   donationCents: number;
 }): Promise<void> {
   await env.DB.prepare(`
-    INSERT INTO sessions (id, license_plate, duration_hours, parking_amount_cents, donation_amount_cents, status)
-    VALUES (?, ?, ?, ?, ?, 'pending')
-  `).bind(data.id, data.licensePlate, data.durationHours, data.parkingCents, data.donationCents).run();
+    INSERT INTO sessions (id, zone_id, license_plate, duration_hours, parking_amount_cents, donation_amount_cents, status)
+    VALUES (?, ?, ?, ?, ?, ?, 'pending')
+  `).bind(data.id, data.zoneId, data.licensePlate, data.durationHours, data.parkingCents, data.donationCents).run();
 }
 
 export async function updateCheckoutSessionId(env: Env, id: string, checkoutId: string): Promise<void> {

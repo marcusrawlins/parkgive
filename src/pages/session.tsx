@@ -1,6 +1,6 @@
 /** @jsxImportSource hono/jsx */
 import { Layout, ParkGiveLogo } from './layout';
-import type { Session } from '../lib/types';
+import type { Session, Zone } from '../lib/types';
 import { formatCents } from '../lib/pricing';
 
 /* ─── Countdown timer script ─── */
@@ -67,10 +67,11 @@ function durationLabel(h: number) {
 /* ─── Page ─── */
 interface Props {
   session: Session;
+  zone: Zone | null;
   payment?: string;
 }
 
-export function SessionPage({ session, payment }: Props) {
+export function SessionPage({ session, zone, payment }: Props) {
   const isPendingAfterPayment = session.status === 'pending' && payment === 'success';
   const totalPaid = session.parking_amount_cents + session.donation_amount_cents;
 
@@ -83,6 +84,22 @@ export function SessionPage({ session, payment }: Props) {
             <ParkGiveLogo size="md" />
           </a>
         </header>
+
+        {/* Zone banner */}
+        {zone && (
+          <div class="bg-brand-light border-b border-brand-soft px-6 py-3">
+            <div class="max-w-md mx-auto flex items-center gap-3">
+              <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-brand text-white flex flex-col items-center justify-center">
+                <span class="text-white text-xs font-bold leading-none">{zone.id.split('-')[0]}</span>
+                <span class="text-white font-extrabold text-sm leading-none">{zone.id.split('-')[1]}</span>
+              </div>
+              <div>
+                <span class="font-semibold text-brand-dark text-sm">{zone.name}</span>
+                <span class="text-brand-muted text-xs ml-2">{zone.address}</span>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div class="flex-1 px-6 py-8 max-w-md mx-auto w-full">
           {isPendingAfterPayment ? (
@@ -150,7 +167,7 @@ export function SessionPage({ session, payment }: Props) {
                 )}
               </div>
               <p class="text-center text-xs text-gray-400">
-                Thank you! Parking proceeds support the local youth program.
+                Thank you! Proceeds support {zone ? `${zone.org_name}'s youth program` : 'the local youth program'}.
               </p>
               <script dangerouslySetInnerHTML={{ __html: TIMER_SCRIPT }} />
             </>
