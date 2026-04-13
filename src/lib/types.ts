@@ -19,3 +19,13 @@ export type DurationOption = {
   hours: 1 | 2 | 4 | 24;
   priceCents: number;
 };
+
+export type Env = {
+  DB: D1Database;
+  R2: R2Bucket;
+  STRIPE_SECRET_KEY: string;
+  STRIPE_WEBHOOK_SECRET: string;
+  CHURCH_STRIPE_ACCOUNT_ID?: string;
+  ADMIN_PASSWORD: string;
+  APP_URL: string;
+};

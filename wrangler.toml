@@ -1,0 +1,25 @@
+name = "parkgive"
+main = "src/index.tsx"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+# D1 database (Cloudflare SQLite)
+[[d1_databases]]
+binding = "DB"
+database_name = "parkgive"
+database_id = "7119e9cb-aa55-448d-b739-a008430188b7"
+
+# R2 bucket (available for receipts / assets if needed)
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "park-give"
+
+# Non-secret env vars
+[vars]
+APP_URL = "https://parkgive.com"
+
+# Secrets — set via: wrangler secret put <NAME>
+#   STRIPE_SECRET_KEY
+#   STRIPE_WEBHOOK_SECRET
+#   CHURCH_STRIPE_ACCOUNT_ID   (optional — Stripe Connect destination)
+#   ADMIN_PASSWORD

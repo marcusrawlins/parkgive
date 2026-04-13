@@ -1,29 +1,21 @@
 {
-  "name": "church-parking",
+  "name": "parkgive",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:apply": "wrangler d1 execute parkgive --file=schema.sql",
+    "db:apply:remote": "wrangler d1 execute parkgive --file=schema.sql --remote",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.103.0",
-    "date-fns": "^4.1.0",
-    "next": "16.2.3",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "stripe": "^22.0.1"
+    "hono": "^4.7.4",
+    "stripe": "^17.7.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.3",
-    "tailwindcss": "^4",
-    "typescript": "^5.9.3"
+    "@cloudflare/workers-types": "^4.20250409.0",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.13.2"
   }
 }

@@ -7,23 +7,14 @@ export const DURATION_OPTIONS: DurationOption[] = [
   { label: 'All Day', hours: 24, priceCents: 1000 },
 ];
 
-/** Parking fee in cents: $2/hr, capped at $10/day */
 export function calcParkingFee(hours: number): number {
   return Math.min(hours * 200, 1000);
 }
 
-/** Stripe processing fee: 2.9% + $0.30, passed to customer */
 export function calcStripeFee(subtotalCents: number): number {
   return Math.round(subtotalCents * 0.029 + 30);
 }
 
-/** Total charge in cents including Stripe fee */
-export function calcTotal(parkingCents: number, donationCents: number): number {
-  const subtotal = parkingCents + donationCents;
-  return subtotal + calcStripeFee(subtotal);
-}
-
-/** Format cents as a dollar string, e.g. 200 → "$2.00" */
 export function formatCents(cents: number): string {
-  return `$${(cents / 100).toFixed(2)}`;
+  return '$' + (cents / 100).toFixed(2);
 }
