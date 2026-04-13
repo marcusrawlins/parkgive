@@ -2,6 +2,12 @@ name = "parkgive"
 main = "src/index.tsx"
 compatibility_date = "2025-04-01"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+routes = [
+  { pattern = "parkgive.com", custom_domain = true },
+  { pattern = "www.parkgive.com", custom_domain = true }
+]
 
 # D1 database (Cloudflare SQLite)
 [[d1_databases]]
